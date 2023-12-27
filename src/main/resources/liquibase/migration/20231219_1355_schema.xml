@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="scraping000-create-schema-scraping" author="sshabanov" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT count(schema_name) FROM information_schema.schemata WHERE schema_name='scraping'
+            </sqlCheck>
+        </preConditions>
+        <comment>Create schema scraping</comment>
+        <sql>
+            CREATE SCHEMA scraping;
+        </sql>
+        <rollback>
+            <sql>
+                DROP SCHEMA IF EXISTS scraping;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

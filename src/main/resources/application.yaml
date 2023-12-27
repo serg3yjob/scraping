@@ -1,0 +1,32 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: scraping-application
+  liquibase:
+    enabled: ${LIQUIBASE_ENABLED:true}
+    change-log: classpath:liquibase/changelog.xml
+    liquibase-schema: public
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/scraping}
+    username: ${DATASOURCE_USERNAME:scraping}
+    password: ${DATASOURCE_PASSWORD:scraping}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+
+logging:
+  level:
+    ru.scraping.data: debug
+
+springdoc.show-actuator: true
+
+app.scraping:
+  magnit:
+    start-url: ${MAGNIT_START_URL:https://my.magnit.ru}
+    today-url: ${MAGNIT_TODAY_URL:https://my.magnit.ru/today}

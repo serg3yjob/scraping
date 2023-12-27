@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.25.xsd">
+
+    <changeSet id="scraping002-add-column-session-to-raw-purchase" author="sshabanov" dbms="postgresql">
+        <preConditions onFail="HALT">
+            <tableExists tableName="raw_purchase" schemaName="scraping"/>
+            <not>
+                <columnExists columnName="session" tableName="raw_purchase" schemaName="scraping"/>
+            </not>
+        </preConditions>
+
+        <comment>Add column session to raw purchase</comment>
+
+        <addColumn tableName="raw_purchase" schemaName="scraping">
+            <column name="session" type="INTEGER" defaultValue="0" remarks="Scraping session number">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <update tableName="raw_purchase" schemaName="scraping">
+            <column name="session" value="1"/>
+            <where><![CDATA[purchase_ts < '2023-12-24 00:00:00.000 +0500'::timestamp]]></where>
+        </update>
+    </changeSet>
+
+</databaseChangeLog>

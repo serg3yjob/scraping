@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.25.xsd">
+
+    <changeSet id="scraping004-drop-column-hash-from-purchase" author="sshabanov" dbms="postgresql">
+        <preConditions onFail="HALT">
+            <columnExists columnName="hash" tableName="purchase" schemaName="scraping"/>
+        </preConditions>
+
+        <comment>Drop column hash from purchase table</comment>
+
+        <dropColumn tableName="purchase" schemaName="scraping">
+            <column name="hash"/>
+        </dropColumn>
+    </changeSet>
+
+</databaseChangeLog>

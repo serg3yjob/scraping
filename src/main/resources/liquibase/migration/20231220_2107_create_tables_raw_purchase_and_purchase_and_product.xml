@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.25.xsd">
+
+    <changeSet id="scraping001-create-tables-raw-purchase-and-purchase-and-product" author="sshabanov" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="raw_purchase" schemaName="scraping"/>
+                <tableExists tableName="purchase" schemaName="scraping"/>
+                <tableExists tableName="product" schemaName="scraping"/>
+            </not>
+        </preConditions>
+
+        <comment>Create table raw_purchase and purchase and product</comment>
+
+        <createTable tableName="raw_purchase" schemaName="scraping" remarks="Table of raw data of purchase">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="hash" type="VARCHAR" remarks="Global unique id generated hash function by purchase timestamp and cost">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR" remarks="Raw purchase status">
+                <constraints nullable="false"/>
+            </column>
+            <column name="system_ts" type="timestamp with time zone" remarks="Time when the purchase processed the system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purchase_ts" type="timestamp with time zone" remarks="Timestamp of purchase">
+                <constraints nullable="false"/>
+            </column>
+            <column name="json" type="jsonb" remarks="json of purchase">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="purchase" schemaName="scraping" remarks="Table of purchase">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="raw_purchase_id" type="BIGINT" remarks="Raw purchase id">
+                <constraints nullable="false"
+                             referencedTableSchemaName="scraping"
+                             referencedTableName="raw_purchase"
+                             referencedColumnNames="id"
+                             foreignKeyName="fk_raw_purchase_id"/>
+            </column>
+            <column name="hash" type="VARCHAR" remarks="Global unique id generated hash function by purchase timestamp and cost">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR" remarks="Purchase status">
+                <constraints nullable="false"/>
+            </column>
+            <column name="system_ts" type="timestamp with time zone" remarks="Time when the purchase processed the system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="purchase_ts" type="timestamp with time zone" remarks="Purchase timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cost" type="NUMERIC" remarks="Purchase cost">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bonus" type="NUMERIC" remarks="Bonus by purchase">
+                <constraints nullable="false"/>
+            </column>
+            <column name="market_address" type="VARCHAR" remarks="Market address"/>
+        </createTable>
+
+        <createTable tableName="product" schemaName="scraping" remarks="Table of product">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="purchase_id" type="BIGINT" remarks="Purchase id">
+                <constraints nullable="false"
+                             referencedTableSchemaName="scraping"
+                             referencedTableName="purchase"
+                             referencedColumnNames="id"
+                             foreignKeyName="fk_purchase_id"/>
+            </column>
+            <column name="name" type="VARCHAR" remarks="Product name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="NUMERIC" remarks="Quantity of product">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit" type="VARCHAR" remarks="Quantity of product">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_cost" type="NUMERIC" remarks="Total cost">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_cost" type="NUMERIC" remarks="Cost of unit product">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
