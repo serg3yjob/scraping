@@ -9,7 +9,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.scraping.data.exceptions.ServiceException;
 import java.time.Duration;
 
-public class SeleniumUtil {
+public final class SeleniumUtil {
+
+    private SeleniumUtil() {
+
+    }
 
     public static void goToPage(String url, WebDriver driver) {
         driver.get(url);

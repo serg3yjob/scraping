@@ -4,7 +4,11 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Util {
+public final class Util {
+
+    private Util() {
+
+    }
 
     private static final Pattern FLOAT_PATTERN = Pattern.compile("\\d+[,.]?\\d*");
 

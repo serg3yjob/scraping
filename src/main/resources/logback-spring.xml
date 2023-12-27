@@ -7,14 +7,7 @@
     <springProperty name="APP_NAME" source="spring.application.name"/>
 
     <property name="LOG_NAME" value="root"/>
-    <property name="LOG_LEVEL" value="trace"/>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <charset>utf-8</charset>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
+    <property name="LOG_LEVEL" value="warn"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -33,12 +26,12 @@
                     </throwableConverter>
                 </stackTrace>
                 <pattern>
-                    <pattern>
-                        {
-                        "original_time":"%date{ISO8601}",
-                        "service":"${APP_NAME}",
-                        }
-                    </pattern>
+                        <pattern>
+                            {
+                                "original_time":"%date{ISO8601}",
+                                "service":"${APP_NAME}"
+                            }
+                        </pattern>
                 </pattern>
             </providers>
         </encoder>

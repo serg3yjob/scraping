@@ -4,7 +4,14 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Unit {
+
+    /**
+     * PACS unit
+     */
     PACS("шт"),
+    /**
+     * KG unit
+     */
     KG("кг");
 
     private final String name;

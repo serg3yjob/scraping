@@ -23,7 +23,6 @@ import ru.scraping.data.service.PurchaseService;
 import ru.scraping.data.service.RawPurchaseService;
 import ru.scraping.data.util.Util;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

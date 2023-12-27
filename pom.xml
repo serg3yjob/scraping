@@ -24,6 +24,13 @@
 		<selenium.version>4.16.1</selenium.version>
 		<springdoc.version>2.3.0</springdoc.version>
 		<apache.commons.version>3.14.0</apache.commons.version>
+		<logstash.logback.encoder.version>7.4</logstash.logback.encoder.version>
+
+		<!-- Checkstyle -->
+		<checkstyle.config.dir>${project.basedir}/checkstyle</checkstyle.config.dir>
+        <checkstyle.file>${checkstyle.config.dir}/checkstyle.xml</checkstyle.file>
+        <checkstyle.header.file>${checkstyle.config.dir}/java.header</checkstyle.header.file>
+        <checkstyle.suppressions.file>${checkstyle.config.dir}/suppressions.xml</checkstyle.suppressions.file>
 	</properties>
 
 	<dependencies>
@@ -42,6 +49,12 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash.logback.encoder.version}</version>
+		</dependency>
 
 	   <dependency>
 		  <groupId>org.springdoc</groupId>
@@ -128,6 +141,38 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.1</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>8.36</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>verify-style</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>${checkstyle.file}</configLocation>
+                    <excludes>**/generated-sources/**</excludes>
+                    <headerLocation>${checkstyle.header.file}</headerLocation>
+                    <suppressionsLocation>${checkstyle.suppressions.file}</suppressionsLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.files</suppressionsFileExpression>
+                    <propertyExpansion>
+                        checkstyle.suppressions.file=${checkstyle.suppressions.file}
+                    </propertyExpansion>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
