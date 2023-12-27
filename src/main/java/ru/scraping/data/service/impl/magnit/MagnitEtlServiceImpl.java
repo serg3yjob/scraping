@@ -96,8 +96,8 @@ public class MagnitEtlServiceImpl implements EtlService {
                 BigDecimal quantity = parseQuantity(supermarketProduct.quantity());
                 Unit unit = parseUnit(supermarketProduct.quantity());
                 BigDecimal totalCost = parseCost(supermarketProduct.cost());
-                BigDecimal unitCost = totalCost.divide(quantity,
-                                                       RoundingMode.HALF_UP).setScale(2, RoundingMode.HALF_UP);
+                BigDecimal unitCost = totalCost.divide(quantity, RoundingMode.HALF_UP)
+                                               .setScale(2, RoundingMode.HALF_UP);
                 ProductEntity product = new ProductEntity()
                         .setName(name)
                         .setQuantity(quantity)
