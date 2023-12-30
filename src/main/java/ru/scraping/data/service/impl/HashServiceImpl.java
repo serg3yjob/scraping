@@ -27,8 +27,7 @@ public class HashServiceImpl implements HashService {
         }
     }
 
-    private String hashToHex(String toHashStr, Optional<String> salt)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    private String hashToHex(String toHashStr, Optional<String> salt) throws NoSuchAlgorithmException {
         byte[] bytes = hash(toHashStr, salt);
 
         StringBuilder sp = new StringBuilder();
