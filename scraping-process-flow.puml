@@ -3,16 +3,16 @@
 autonumber
 actor user
 participant ss as "Scraping\nservice"
-participant ldb as "Local\nDB"
+participant db as "DB"
 participant account as "Supermarket\npersonal account"
 
 user -> ss: Run data scraping
 ss -> account: Data scraping
 account --> ss: Raw Data
-ss -> ldb: Save raw data
+ss -> db: Save raw data
 user -> ss: Run ETL process
 ss -> ss: ETL process
-note right ss: Extract raw data, transform to\nPurchases and Products, save
+note right ss: Extract raw data, transform to\nPurchases and Products, save to DB
 user -> ss: Request export to Excel
 ss -> ss: Generate Excel with purcases and products
 ss -> user: Excel file
