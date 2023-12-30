@@ -1,7 +1,7 @@
 # Scraping data project
 
 ### Scraping process flow:
-![./scraping-process-flow.svg](./scraping-process-flow.svg)
+![./scraping-process-flow.svg](./scraping-process-flow_.svg)
 
 ### Using technologies:
 java 17, ide idea, git, xml, jackson json, maven, lombok, jpa (hibernate 6.3.1), 
